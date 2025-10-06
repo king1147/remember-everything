@@ -1,3 +1,5 @@
 .venv/
 .idea/
-services/message-receiver/db.sqlite3
+
+db.sqlite3
+.env

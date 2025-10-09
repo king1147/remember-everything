@@ -18,15 +18,12 @@ class EmailSender:
             msg = MIMEMultipart()
             msg['From'] = self.config['EMAIL_FROM']
             msg['To'] = self.config['EMAIL_TO']
-            msg['Subject'] = f'New Message from RabbitMQ - {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
+            msg['Subject'] = f'Message from RabbitMQ'
 
             # Email body
             body = f"""
-            You have received a new message from the message queue:
 
-            Message: {message_content}
-
-            Received at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+            {message_content}
 
             ---
             This is an automated message from the Mail Sender Service.

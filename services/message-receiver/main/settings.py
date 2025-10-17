@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'messenger',
     'users',
+    'analytics',
 ]
 
 MIDDLEWARE = [
@@ -83,9 +84,19 @@ DATABASES = {
         'PASSWORD': 'postgres11',
         'HOST': 'localhost',
         'PORT': '5432',
+    },
+    'analytics': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'analytics',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres11',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
+# Database routing
+DATABASE_ROUTERS = ['analytics.router.AnalyticsRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

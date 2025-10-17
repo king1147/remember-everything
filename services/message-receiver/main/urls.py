@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('messenger.urls')),
     path('', include('users.urls')),
+    path('', include('analytics.urls')),
 ]

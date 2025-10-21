@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+(q56jt#cc*)3&f3v(8!fs-m63@hfl+%b=b)_!(=-m0ga89)$8'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '*',
+]
 
 
 # Application definition
@@ -79,19 +87,19 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres11',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('DEFAULT_DB_NAME'),
+        'USER': os.environ.get('DEFAULT_DB_USER'),
+        'PASSWORD': os.environ.get('DEFAULT_DB_PASSWORD'),
+        'HOST': os.environ.get('DEFAULT_DB_HOST'),
+        'PORT': int(os.environ.get('DEFAULT_DB_PORT')),
     },
     'analytics': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'analytics',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres11',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('ANALYTICS_DB_NAME'),
+        'USER': os.environ.get('ANALYTICS_DB_USER'),
+        'PASSWORD': os.environ.get('ANALYTICS_DB_PASSWORD'),
+        'HOST': os.environ.get('ANALYTICS_DB_HOST'),
+        'PORT': int(os.environ.get('ANALYTICS_DB_PORT')),
     }
 }
 
@@ -134,15 +142,19 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# For AWS S3
+if os.environ.get('AWS_EXECUTION_ENV'):
+    STATIC_URL = f"https://{os.environ.get('S3_BUCKET')}.s3.amazonaws.com/static/"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # RabbitMQ Configuration
-RABBITMQ_HOST = 'localhost'
-RABBITMQ_PORT = 5672
-RABBITMQ_USER = 'guest'
-RABBITMQ_PASSWORD = 'guest'
-RABBITMQ_EXCHANGE = 'mail_message'
-RABBITMQ_ROUTING_KEY = 'mail1'
+RABBITMQ_HOST = os.environ.get('RABBITMQ_HOST')
+RABBITMQ_PORT = int(os.environ.get('RABBITMQ_PORT'))
+RABBITMQ_USER = os.environ.get('RABBITMQ_USER')
+RABBITMQ_PASSWORD = os.environ.get('RABBITMQ_PASSWORD')
+RABBITMQ_EXCHANGE = os.environ.get('RABBITMQ_EXCHANGE')
+RABBITMQ_ROUTING_KEY = os.environ.get('RABBITMQ_ROUTING_KEY')

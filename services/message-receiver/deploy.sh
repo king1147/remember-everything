@@ -3,7 +3,8 @@
 set -e
 
 # Configuration
-AWS_REGION=eu-central-1
+export DOCKER_BUILDKIT=0
+export AWS_REGION=eu-central-1
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 REPO_NAME=message-receiver
 FUNCTION_NAME=message-receiver-app

@@ -26,6 +26,11 @@ python manage.py migrate
 python manage.py migrate --database analytics
 ```
 
+#### Deploy
+```
+./deploy.sh
+```
+
 ### 2. Mail Sender
 
 A dedicated service for handling email sending.

@@ -15,4 +15,4 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV DJANGO_SETTINGS_MODULE=main.settings
 
-CMD ["lambda_handler.handler"]
+CMD ["wsgi_handler.handler"]

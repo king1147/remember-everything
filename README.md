@@ -20,7 +20,7 @@ pip install -r .\requirements.txt
 python manage.py runserver
 ```
 
-#### Migrate DBs
+#### Migrate DBs locally
 ```
 python manage.py migrate
 python manage.py migrate --database analytics

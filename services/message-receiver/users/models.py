@@ -9,6 +9,10 @@ class User(models.Model):
     password = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        app_label = 'users'
+        db_table = 'user'
+
     def __str__(self):
         return self.login
 

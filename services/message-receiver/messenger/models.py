@@ -12,5 +12,9 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     sent_to_rabbitmq = models.BooleanField(default=False)
 
+    class Meta:
+        app_label = 'messenger'
+        db_table = 'message'
+
     def __str__(self):
         return f"{self.content}"

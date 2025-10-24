@@ -103,8 +103,13 @@ DATABASES = {
     }
 }
 
-# Database routing
-DATABASE_ROUTERS = ['analytics.router.AnalyticsRouter']
+DATABASE_ROUTERS = ['main.router.DatabaseRouter']
+
+DATABASE_APPS_MAPPING = {
+    'messenger': 'default',
+    'users': 'default',
+    'analytics': 'analytics',
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

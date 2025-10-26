@@ -4,6 +4,7 @@ from .forms import MessageForm
 from .rabbitmq import send_to_rabbitmq
 from analytics.models import MessageAnalytics
 from users.models import User
+from logs.utils import log_user_action
 import time
 
 
@@ -24,17 +25,33 @@ def send_message(request):
                 message.sent_to_rabbitmq = True
                 message.save()
 
+                user_login = User.objects.get(id=user_id).login
+                
                 MessageAnalytics.objects.using('analytics').create(
                     message_id=message.id,
-                    user_login=User.objects.get(id=user_id).login,
+                    user_login=user_login,
                     content_length=len(message.content),
                     sent_to_rabbitmq=True,
                     processing_time_ms=processing_time
                 )
+
+                log_user_action(
+                    user_login=user_login,
+                    action='send_message',
+                    details=f'Message sent (length: {len(message.content)}, processing: {processing_time}ms)',
+                    request=request
+                )
+                
                 messages.success(request, 'Message sent successfully!')
                 return redirect('send_message')
             else:
-                messages.error(request, 'Failed to send message to RabbitMQ. Please try again.')
+                log_user_action(
+                    user_login=User.objects.get(id=user_id).login,
+                    action='send_message_failed',
+                    details='Failed to send message',
+                    request=request
+                )
+                messages.error(request, 'Failed to send message. Please try again.')
         else:
             messages.error(request, 'Please correct the errors below.')
     else:

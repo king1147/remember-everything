@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('messenger.urls')),
     path('', include('users.urls')),
     path('', include('analytics.urls')),
+    path('', include('logs.urls')),
 ]

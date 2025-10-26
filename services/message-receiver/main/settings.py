@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from mongoengine import connect
 
 load_dotenv()
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'messenger',
     'users',
     'analytics',
+    'logs',
 ]
 
 MIDDLEWARE = [
@@ -110,6 +112,26 @@ DATABASE_APPS_MAPPING = {
     'users': 'default',
     'analytics': 'analytics',
 }
+
+# MongoDB Configuration
+MONGODB_HOST = os.environ.get('MONGODB_HOST')
+MONGODB_PORT = int(os.environ.get('MONGODB_PORT'))
+MONGODB_DB = os.environ.get('MONGODB_DB')
+MONGODB_USER = os.environ.get('MONGODB_USER')
+MONGODB_PASSWORD = os.environ.get('MONGODB_PASSWORD')
+
+# Connect to MongoDB
+if MONGODB_USER and MONGODB_PASSWORD:
+    connect(
+        db=MONGODB_DB,
+        host=MONGODB_HOST,
+        port=MONGODB_PORT,
+        username=MONGODB_USER,
+        password=MONGODB_PASSWORD,
+        authentication_source='admin'
+    )
+else:
+    connect(db=MONGODB_DB, host=MONGODB_HOST, port=MONGODB_PORT)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

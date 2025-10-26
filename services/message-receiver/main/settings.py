@@ -122,14 +122,7 @@ MONGODB_PASSWORD = os.environ.get('MONGODB_PASSWORD')
 
 # Connect to MongoDB
 if MONGODB_USER and MONGODB_PASSWORD:
-    connect(
-        db=MONGODB_DB,
-        host=MONGODB_HOST,
-        port=MONGODB_PORT,
-        username=MONGODB_USER,
-        password=MONGODB_PASSWORD,
-        authentication_source='admin'
-    )
+    connect(host=f'mongodb+srv://{MONGODB_USER}:{MONGODB_PASSWORD}@{MONGODB_HOST}/{MONGODB_DB}?retryWrites=true&w=majority')
 else:
     connect(db=MONGODB_DB, host=MONGODB_HOST, port=MONGODB_PORT)
 

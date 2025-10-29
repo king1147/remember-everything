@@ -42,3 +42,8 @@ Location: `services/mail-sender/`
 pip install -r .\requirements.txt
 python run.py
 ```
+
+#### Deploy
+```
+./deploy.sh
+```

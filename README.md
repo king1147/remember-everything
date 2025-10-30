@@ -15,6 +15,7 @@ A web application that provides the core messaging and user management functiona
 Location: `services/message-receiver/`
 
 #### Get started
+You need to have PostgreSQL and RabitMQ installed locally.
 ```
 pip install -r .\requirements.txt
 python manage.py runserver

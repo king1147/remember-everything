@@ -22,4 +22,5 @@ class Config:
     EMAIL_TO = os.getenv('EMAIL_TO')
 
     # Flask
-    FLASK_ENV = os.getenv('FLASK_ENV', 'development')
+    ENV = os.getenv('ENV', 'development')
+    DEBUG = int(os.getenv('DEBUG', 1))

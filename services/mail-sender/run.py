@@ -16,7 +16,7 @@ app = create_app()
 
 
 def start_consumer():
-    """Start RabbitMQ consumer in background"""
+    """Start RabbitMQ consumer"""
     global consumer
     consumer = RabbitMQConsumer(app.config)
     consumer.start_consuming()
@@ -27,4 +27,4 @@ if __name__ == '__main__':
     consumer_thread.start()
 
     logger.info("Starting Flask application...")
-    app.run(host='0.0.0.0', port=5001, debug=False)
+    app.run(host='0.0.0.0', port=5001)

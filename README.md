@@ -15,9 +15,10 @@ A web application that provides the core messaging and user management functiona
 Location: `services/message-receiver/`
 
 #### Get started
-You need to have PostgreSQL and RabitMQ installed locally.
+You need to create .env file (from .env.example) and have PostgreSQL and RabitMQ installed locally.
 ```
-pip install -r .\requirements.txt
+pip install -r ./requirements.txt
+pip install -e ../common
 python manage.py runserver
 ```
 
@@ -39,8 +40,10 @@ A dedicated service for handling email sending.
 Location: `services/mail-sender/`
 
 #### Get started
+You need to create .env file (from .env.example) and have RabitMQ installed locally.
 ```
-pip install -r .\requirements.txt
+pip install -r ./requirements.txt
+pip install -e ../common
 python run.py
 ```
 

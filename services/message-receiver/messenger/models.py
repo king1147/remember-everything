@@ -10,7 +10,7 @@ class Message(models.Model):
     )
     content = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    sent_to_rabbitmq = models.BooleanField(default=False)
+    sent_to_mq = models.BooleanField(default=False)
 
     class Meta:
         app_label = 'messenger'

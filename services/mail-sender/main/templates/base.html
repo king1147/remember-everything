@@ -16,10 +16,12 @@
                     <h5>Configuration:</h5>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <strong>RabbitMQ Host:</strong> {{ config['RABBITMQ_HOST'] }}
+                            <strong>Message Broker:</strong> {{ config['MQ_BROKER'] }}
                         </li>
                         <li class="list-group-item">
-                            <strong>RabbitMQ Queue:</strong> {{ config['RABBITMQ_QUEUE'] }}
+                            <strong>Message Broker Host:</strong> {{
+                                config['SQS_QUEUE_URL'] if config['MQ_BROKER'] == 'sqs' else config['RABBITMQ_HOST']
+                            }}
                         </li>
                         <li class="list-group-item">
                             <strong>SMTP Server:</strong> {{ config['SMTP_SERVER'] }}
@@ -32,7 +34,7 @@
                         </li>
                     </ul>
                     <div class="alert alert-info mt-3">
-                        <strong>Info:</strong> This service is listening for messages from RabbitMQ
+                        <strong>Info:</strong> This service is listening for messages
                         and sending them via email.
                     </div>
                 </div>

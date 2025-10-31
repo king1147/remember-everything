@@ -2,6 +2,9 @@
 
 set -e
 
+# Change to services directory
+cd "$(dirname "$0")/.."
+
 # Configuration
 export DOCKER_BUILDKIT=0
 export AWS_REGION=eu-central-1
@@ -14,7 +17,7 @@ ECR_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$REPO_NAME
 echo "Starting deployment..."
 
 echo "Building Docker image..."
-docker build --platform linux/amd64 -t $REPO_NAME .
+docker build --platform linux/amd64 -f message-receiver/Dockerfile -t $REPO_NAME .
 
 echo "Logging in to ECR..."
 aws ecr get-login-password --region $AWS_REGION | \

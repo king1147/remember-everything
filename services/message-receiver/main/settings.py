@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -89,19 +89,19 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DEFAULT_DB_NAME'),
+        'NAME': os.environ.get('DEFAULT_DB_NAME', 'messages'),
         'USER': os.environ.get('DEFAULT_DB_USER'),
         'PASSWORD': os.environ.get('DEFAULT_DB_PASSWORD'),
-        'HOST': os.environ.get('DEFAULT_DB_HOST'),
-        'PORT': int(os.environ.get('DEFAULT_DB_PORT')),
+        'HOST': os.environ.get('DEFAULT_DB_HOST', 'localhost'),
+        'PORT': int(os.environ.get('DEFAULT_DB_PORT', 5432)),
     },
     'analytics': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('ANALYTICS_DB_NAME'),
+        'NAME': os.environ.get('ANALYTICS_DB_NAME', 'analytics'),
         'USER': os.environ.get('ANALYTICS_DB_USER'),
         'PASSWORD': os.environ.get('ANALYTICS_DB_PASSWORD'),
-        'HOST': os.environ.get('ANALYTICS_DB_HOST'),
-        'PORT': int(os.environ.get('ANALYTICS_DB_PORT')),
+        'HOST': os.environ.get('ANALYTICS_DB_HOST', 'localhost'),
+        'PORT': int(os.environ.get('ANALYTICS_DB_PORT', 5432)),
     }
 }
 
@@ -114,9 +114,9 @@ DATABASE_APPS_MAPPING = {
 }
 
 # MongoDB Configuration
-MONGODB_HOST = os.environ.get('MONGODB_HOST')
-MONGODB_PORT = int(os.environ.get('MONGODB_PORT'))
-MONGODB_DB = os.environ.get('MONGODB_DB')
+MONGODB_HOST = os.environ.get('MONGODB_HOST', 'localhost')
+MONGODB_PORT = int(os.environ.get('MONGODB_PORT', 27017))
+MONGODB_DB = os.environ.get('MONGODB_DB', 'user-logs')
 MONGODB_USER = os.environ.get('MONGODB_USER')
 MONGODB_PASSWORD = os.environ.get('MONGODB_PASSWORD')
 
@@ -171,10 +171,16 @@ if os.environ.get('AWS_EXECUTION_ENV'):
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Message Queue Broker
+MQ_BROKER=os.environ.get('MQ_BROKER', 'rabbitmq')
+
 # RabbitMQ Configuration
-RABBITMQ_HOST = os.environ.get('RABBITMQ_HOST')
-RABBITMQ_PORT = int(os.environ.get('RABBITMQ_PORT'))
+RABBITMQ_HOST = os.environ.get('RABBITMQ_HOST', 'localhost')
+RABBITMQ_PORT = int(os.environ.get('RABBITMQ_PORT', 5672))
 RABBITMQ_USER = os.environ.get('RABBITMQ_USER')
 RABBITMQ_PASSWORD = os.environ.get('RABBITMQ_PASSWORD')
-RABBITMQ_EXCHANGE = os.environ.get('RABBITMQ_EXCHANGE')
-RABBITMQ_ROUTING_KEY = os.environ.get('RABBITMQ_ROUTING_KEY')
+RABBITMQ_EXCHANGE = os.environ.get('RABBITMQ_EXCHANGE', 'mail_message')
+RABBITMQ_ROUTING_KEY = os.environ.get('RABBITMQ_ROUTING_KEY', 'mail1')
+
+# SQS Configuration
+SQS_QUEUE_URL=os.environ.get('SQS_QUEUE_URL')

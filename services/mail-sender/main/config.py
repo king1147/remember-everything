@@ -1,26 +1,34 @@
-import os
-from dotenv import load_dotenv
+from pydantic import EmailStr
+from pydantic_settings import BaseSettings
+from typing import Literal
 
-load_dotenv()
 
+class Settings(BaseSettings):
+    # Flask Configuration
+    ENV: str = 'development'
+    DEBUG: int = 1
 
-class Config:
+    # Message Queue Broker
+    MQ_BROKER: Literal['rabbitmq', 'sqs'] = 'rabbitmq'
+
     # RabbitMQ
-    RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'localhost')
-    RABBITMQ_PORT = int(os.getenv('RABBITMQ_PORT', 5672))
-    RABBITMQ_USER = os.getenv('RABBITMQ_USER', 'guest')
-    RABBITMQ_PASSWORD = os.getenv('RABBITMQ_PASSWORD', 'guest')
-    RABBITMQ_QUEUE = os.getenv('RABBITMQ_QUEUE', 'messages')
+    RABBITMQ_HOST: str = 'localhost'
+    RABBITMQ_PORT: int =  5672
+    RABBITMQ_USER: str
+    RABBITMQ_PASSWORD: str
+    RABBITMQ_QUEUE: str = 'messages'
+
+    # SQS Configuration
+    SQS_QUEUE_URL: str
 
     # SMTP
-    SMTP_SERVER = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
-    SMTP_PORT = int(os.getenv('SMTP_PORT', 587))
-    SMTP_USE_TLS = os.getenv('SMTP_USE_TLS', 'True').lower() == 'true'
-    SMTP_USERNAME = os.getenv('SMTP_USERNAME')
-    SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
-    EMAIL_FROM = os.getenv('EMAIL_FROM')
-    EMAIL_TO = os.getenv('EMAIL_TO')
+    SMTP_SERVER: str = 'smtp.gmail.com'
+    SMTP_PORT: int = 587
+    SMTP_USE_TLS: bool = True
+    SMTP_USERNAME: str
+    SMTP_PASSWORD: str
+    EMAIL_FROM: EmailStr
+    EMAIL_TO: EmailStr
 
-    # Flask
-    ENV = os.getenv('ENV', 'development')
-    DEBUG = int(os.getenv('DEBUG', 1))
+    class Config:
+        env_file = '.env'

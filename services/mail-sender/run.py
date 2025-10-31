@@ -1,4 +1,5 @@
-from main.rabbitmq_consumer import RabbitMQConsumer
+from common.message_queue import MessageQueue
+from main.email_sender import EmailSender
 from main import create_app
 import threading
 import logging
@@ -14,11 +15,16 @@ consumer_thread = None
 
 app = create_app()
 
+def process_message(message):
+    """Process message"""
+    email_sender = EmailSender(app.config)
+    email_sender.send_email(message)
+
 
 def start_consumer():
-    """Start RabbitMQ consumer"""
+    """Start consumer"""
     global consumer
-    consumer = RabbitMQConsumer(app.config)
+    consumer = MessageQueue(app.config, EmailSender(app.config))
     consumer.start_consuming()
 
 

@@ -7,7 +7,7 @@ def analytics_dashboard(request):
     stats = MessageAnalytics.objects.using('analytics').aggregate(
         total_messages=Count('id'),
         avg_processing_time=Avg('processing_time_ms'),
-        successful_sends=Count('id', filter=Q(sent_to_rabbitmq=True))
+        successful_sends=Count('id', filter=Q(sent_to_mq=True))
     )
 
     recent = MessageAnalytics.objects.using('analytics').order_by('-created_at')[:10]

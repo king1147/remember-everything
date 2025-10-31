@@ -5,7 +5,7 @@ class MessageAnalytics(models.Model):
     message_id = models.IntegerField()
     user_login = models.CharField(max_length=150)
     content_length = models.IntegerField()
-    sent_to_rabbitmq = models.BooleanField(default=False)
+    sent_to_mq = models.BooleanField(default=False)
     processing_time_ms = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

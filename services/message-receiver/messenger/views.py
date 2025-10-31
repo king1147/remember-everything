@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from . import mq
 from .forms import MessageForm
-from .rabbitmq import send_to_rabbitmq
 from analytics.models import MessageAnalytics
 from users.models import User
 from logs.utils import log_user_action
@@ -18,11 +18,11 @@ def send_message(request):
                 message.user = User.objects.get(id=user_id)
 
             start_time = time.time()
-            success = send_to_rabbitmq(message.content)
+            success = mq.send(message.content)
             processing_time = int((time.time() - start_time) * 1000)
 
             if success:
-                message.sent_to_rabbitmq = True
+                message.sent_to_mq = True
                 message.save()
 
                 user_login = User.objects.get(id=user_id).login
@@ -31,7 +31,7 @@ def send_message(request):
                     message_id=message.id,
                     user_login=user_login,
                     content_length=len(message.content),
-                    sent_to_rabbitmq=True,
+                    sent_to_mq=True,
                     processing_time_ms=processing_time
                 )
 

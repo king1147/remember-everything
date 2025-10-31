@@ -62,7 +62,7 @@
                                             <td>{{ item.user_login }}</td>
                                             <td>{{ item.content_length }}</td>
                                             <td>
-                                                {% if item.sent_to_rabbitmq %}
+                                                {% if item.sent_to_mq %}
                                                     <span class="badge bg-success">Sent</span>
                                                 {% else %}
                                                     <span class="badge bg-danger">Failed</span>

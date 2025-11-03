@@ -116,7 +116,7 @@ DATABASE_APPS_MAPPING = {
 # MongoDB Configuration
 MONGODB_HOST = os.environ.get('MONGODB_HOST', 'localhost')
 MONGODB_PORT = int(os.environ.get('MONGODB_PORT', 27017))
-MONGODB_DB = os.environ.get('MONGODB_DB', 'user-logs')
+MONGODB_DB = os.environ.get('MONGODB_DB', 'user_logs')
 MONGODB_USER = os.environ.get('MONGODB_USER')
 MONGODB_PASSWORD = os.environ.get('MONGODB_PASSWORD')
 

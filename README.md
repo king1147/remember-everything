@@ -7,6 +7,7 @@ Remember everything you would need
 This project consists of multiple microservices designed to handle messaging and communication functionality.
 
 ## Services
+You need to create .env file (from .env.example) and have PostgreSQL, MongoDB and RabitMQ to run it locally.
 
 ### 1. Message Receiver
 
@@ -15,7 +16,6 @@ A web application that provides the core messaging and user management functiona
 Location: `services/message-receiver/`
 
 #### Get started
-You need to create .env file (from .env.example) and have PostgreSQL and RabitMQ installed locally.
 ```
 pip install -r ./requirements.txt
 pip install -e ../common
@@ -40,7 +40,6 @@ A dedicated service for handling email sending.
 Location: `services/mail-sender/`
 
 #### Get started
-You need to create .env file (from .env.example) and have RabitMQ installed locally.
 ```
 pip install -r ./requirements.txt
 pip install -e ../common

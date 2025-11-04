@@ -13,10 +13,21 @@
     {% block extra_style %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">Test yourself</span>
-            <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <span class="navbar-brand ms-3">Test yourself</span>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'send_message' %}">Send Message</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'calculate_input' %}">Calculate</a>
+                </li>
+                <li class="nav-item navbar-right">
+                    <a class="nav-link" href="{% url 'log_viewer' %}">Logs</a>
+                </li>
+            </ul>
+            <a href="{% url 'logout' %}" class="btn btn-danger me-3">Logout</a>
         </div>
     </nav>
 

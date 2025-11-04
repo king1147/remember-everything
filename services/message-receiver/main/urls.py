@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('users.urls')),
     path('', include('analytics.urls')),
     path('', include('logs.urls')),
+    path('calculate/', include('calculate.urls')),
 ]

@@ -7,7 +7,7 @@ Remember everything you would need
 This project consists of multiple microservices designed to handle messaging and communication functionality.
 
 ## Services
-You need to create .env file (from .env.example) and have PostgreSQL, MongoDB and RabitMQ to run it locally.
+You need to create .env file (from .env.example) and have PostgreSQL, MongoDB, Redis and RabitMQ to run it locally.
 
 ### 1. Message Receiver
 
@@ -19,13 +19,18 @@ Location: `services/message-receiver/`
 ```
 pip install -r ./requirements.txt
 pip install -e ../common
-python manage.py runserver
 ```
 
 #### Migrate DBs locally
 ```
 python manage.py migrate
 python manage.py migrate --database analytics
+```
+
+#### Run
+```
+celery -A main worker --loglevel=INFO --pool=eventlet
+python manage.py runserver
 ```
 
 #### Deploy

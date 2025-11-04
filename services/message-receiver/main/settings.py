@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import os
+import redis
 from pathlib import Path
 from dotenv import load_dotenv
 from mongoengine import connect
@@ -46,10 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_results',
     'messenger',
     'users',
     'analytics',
     'logs',
+    'calculate',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +129,14 @@ if MONGODB_USER and MONGODB_PASSWORD:
 else:
     connect(db=MONGODB_DB, host=MONGODB_HOST, port=MONGODB_PORT)
 
+# Redis Configuration
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_PORT = int(os.environ.get('REDIS_PORT', 6379))
+REDIS_DB = int(os.environ.get('REDIS_DB', 0))
+
+# Connect to Redis
+redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=True)
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -184,3 +195,8 @@ RABBITMQ_ROUTING_KEY = os.environ.get('RABBITMQ_ROUTING_KEY', 'mail1')
 
 # SQS Configuration
 SQS_QUEUE_URL=os.environ.get('SQS_QUEUE_URL')
+
+# Celery Configuration
+CELERY_BROKER_URL = f'pyamqp://{RABBITMQ_USER}:{RABBITMQ_PASSWORD}@{RABBITMQ_HOST}//'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'

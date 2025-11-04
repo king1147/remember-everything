@@ -6,3 +6,6 @@ aws-wsgi==0.2.7
 mongoengine==0.29.1
 pymongo==4.15.3
 boto3==1.40.62
+celery==5.5.3
+eventlet==0.40.3
+redis==7.0.1

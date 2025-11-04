@@ -1,0 +1,49 @@
+{% extends "users/base.html" %}
+
+{% block title %}Calculation Results{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">Calculation Results</h3>
+                </div>
+                <div class="card-body">
+                    {% if results %}
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Key</th>
+                                        <th scope="col">Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result in results %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ result.key }}</td>
+                                        <td>{{ result.value }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info" role="alert">
+                            <h5 class="alert-heading">No results yet!</h5>
+                            <p>There are no calculation results in the database. Start by submitting a calculation.</p>
+                        </div>
+                    {% endif %}
+                    <div class="mt-3">
+                        <a href="{% url 'calculate_input' %}" class="btn btn-primary">New Calculation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

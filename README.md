@@ -55,3 +55,14 @@ python run.py
 ```
 ./deploy.sh
 ```
+
+### 3. Ticket Booking API
+
+A REST API for booking train tickets.
+
+#### Get started
+
+```
+pip install -r ./requirements.txt
+uvicorn main:app --reload
+```

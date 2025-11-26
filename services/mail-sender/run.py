@@ -1,4 +1,4 @@
-from common.message_queue import MessageQueue
+from common.message_queue import RabbitMQBroker
 from main.email_sender import EmailSender
 from main import create_app
 import threading
@@ -24,7 +24,7 @@ def process_message(message):
 def start_consumer():
     """Start consumer"""
     global consumer
-    consumer = MessageQueue(app.config, EmailSender(app.config))
+    consumer = RabbitMQBroker(app.config, EmailSender(app.config))
     consumer.start_consuming()
 
 

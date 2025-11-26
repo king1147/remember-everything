@@ -1,4 +1,4 @@
-from common.message_queue import MessageQueue
+from common.message_queue import RabbitMQBroker, SQSBroker
 from django.conf import settings
 
 config = {
@@ -12,4 +12,9 @@ config = {
     'SQS_QUEUE_URL': settings.SQS_QUEUE_URL
 }
 
-mq = MessageQueue(config)
+if settings.MQ_BROKER == 'rabbitmq':
+    mq = RabbitMQBroker(config)
+elif settings.MQ_BROKER == 'sqs':
+    mq = SQSBroker(config)
+else:
+    raise Exception(f'Unknown MQ broker: {settings.MQ_BROKER}')
